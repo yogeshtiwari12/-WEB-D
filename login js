@@ -1,0 +1,64 @@
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
+import {
+    getAuth,
+    signInWithEmailAndPassword,
+    onAuthStateChanged,
+    signOut
+} from "https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js";
+const firebaseConfig = {
+            apiKey: "AIzaSyA7loai8dtobI3N_FQ4M4B4ph03ZMcBC4M",
+            authDomain: "login-and-sign-up-103bf.firebaseapp.com",
+            projectId: "login-and-sign-up-103bf",
+            storageBucket: "login-and-sign-up-103bf.appspot.com",
+            messagingSenderId: "564195449980",
+            appId: "1:564195449980:web:c7176c6a32663a4a1afdf9"
+        };
+
+
+const app = initializeApp(firebaseConfig)
+
+const auth = getAuth(app);
+
+
+const submit = document.getElementById('submit');
+// alert("to kaise hai aap log");
+
+submit.addEventListener("click", function(e) {
+    e.preventDefault();
+    const gmail = document.getElementById('gmail').value;
+ const password = document.getElementById('password').value;
+
+
+
+ if (!gmail.toLowerCase().endsWith("@gmail.com")) {
+  alert("Please enter a valid Gmail address (ending with @gmail.com).");
+ 
+}
+
+else if (password.length < 7) {
+  alert("Password must be at least 7 characters long.");
+
+}
+else{
+    var bool = false;
+
+  signInWithEmailAndPassword(auth, gmail, password)
+      .then((userCredential) => {
+        alert("login sucess !!")
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        if (errorCode === "auth/invalid-login-credentials" || errorCode === "auth/user-not-found") {
+            alert("Incorrect email OR password. Please try again.");
+        } else {
+            const errorMessage = error.message;
+            alert(errorMessage);
+        }
+      });
+    
+    }
+
+    
+});
+
+
